@@ -1,0 +1,44 @@
+{
+  "name": "green-identify-web",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "cleanup": "chmod +x ./scripts/cleanup.sh && ./scripts/cleanup.sh",
+    "dev:client": "npm run cleanup && cross-env PORT=3000 vite",
+    "dev:server": "npm run cleanup && cd server && cross-env PORT=3001 npm run dev",
+    "dev": "npm run cleanup && concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "build": "tsc && vite build && cd server && npm run build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "start": "pm2 start ecosystem.config.js",
+    "stop": "pm2 stop ecosystem.config.js",
+    "restart": "pm2 restart ecosystem.config.js"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^6.4.0",
+    "@mui/material": "^6.4.0",
+    "@types/node": "^22.10.7",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "axios": "^1.7.9",
+    "date-fns": "^4.1.0",
+    "openai": "^4.79.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.22.0",
+    "typescript": "^5.7.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^9.1.2",
+    "cross-env": "^7.0.3",
+    "pm2": "^5.4.3",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^3.4.17",
+    "vite": "^6.0.10"
+  }
+}

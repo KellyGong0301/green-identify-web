@@ -1,0 +1,11 @@
+{
+  "server": {
+    "ip": "YOUR_VM_IP",
+    "user": "YOUR_SSH_USER",
+    "domain": "YOUR_DOMAIN_IF_ANY"
+  },
+  "app": {
+    "name": "green-identify",
+    "port": 3000
+  }
+}
