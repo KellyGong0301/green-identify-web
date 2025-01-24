@@ -46,7 +46,7 @@ const Login = () => {
       }
 
       const data = await response.json();
-      login(data.token);
+      await login(data.token);
       navigate('/');
     } catch (err) {
       setError(err instanceof Error ? err.message : '登录失败');
