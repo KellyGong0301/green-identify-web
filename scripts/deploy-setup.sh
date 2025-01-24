@@ -6,34 +6,34 @@ set -e
 echo "开始设置服务器环境..."
 
 # 更新系统包
-sudo -S apt-get update
-sudo -S apt-get upgrade -y
+sudo apt-get update
+sudo apt-get upgrade -y
 
 # 安装必要的软件包
-sudo -S apt-get install -y curl nginx
+sudo apt-get install -y curl nginx
 
 # 安装 Node.js 20.x
 curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-sudo -S apt-get install -y nodejs
+sudo apt-get install -y nodejs
 
 # 安装 PM2
-sudo -S npm install -g pm2
+sudo npm install -g pm2
 
-# 安装 MongoDB 6.0
-curl -fsSL https://www.mongodb.org/static/pgp/server-6.0.asc | sudo gpg --dearmor -o /usr/share/keyrings/mongodb-server-6.0.gpg
-echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
-sudo -S apt-get update
-sudo -S apt-get install -y mongodb-org
+# 安装 MongoDB 7.0
+wget -qO - https://www.mongodb.org/static/pgp/server-7.0.asc | sudo apt-key add -
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+sudo apt-get update
+sudo apt-get install -y mongodb-org
 
 # 启动 MongoDB
-sudo -S systemctl start mongod
-sudo -S systemctl enable mongod
+sudo systemctl start mongod
+sudo systemctl enable mongod
 
 # 安装 Nginx
-sudo -S apt-get install -y nginx
+sudo apt-get install -y nginx
 
 # 配置 Nginx
-sudo -S tee /etc/nginx/sites-available/green-identify << 'EOF'
+sudo tee /etc/nginx/sites-available/green-identify << 'EOF'
 server {
     listen 80;
     server_name _;  # 替换为你的域名
@@ -57,24 +57,24 @@ server {
 EOF
 
 # 启用网站配置
-sudo -S ln -sf /etc/nginx/sites-available/green-identify /etc/nginx/sites-enabled/
-sudo -S rm -f /etc/nginx/sites-enabled/default
+sudo ln -sf /etc/nginx/sites-available/green-identify /etc/nginx/sites-enabled/
+sudo rm -f /etc/nginx/sites-enabled/default
 
 # 测试 Nginx 配置
-sudo -S nginx -t
+sudo nginx -t
 
 # 重启 Nginx
-sudo -S systemctl restart nginx
+sudo systemctl restart nginx
 
 # 配置防火墙
-sudo -S ufw allow ssh
-sudo -S ufw allow http
-sudo -S ufw allow https
-sudo -S ufw --force enable
+sudo ufw allow ssh
+sudo ufw allow http
+sudo ufw allow https
+sudo ufw --force enable
 
 # 创建应用目录
-sudo -S mkdir -p /var/www/green-identify
-sudo -S chown -R $USER:$USER /var/www/green-identify
+sudo mkdir -p /var/www/green-identify
+sudo chown -R kellygong:kellygong /var/www/green-identify
 
 echo "基础环境设置完成！"
 echo "接下来需要："
