@@ -66,7 +66,7 @@ export const identifyPlantWithPlantId = async (imageBase64: string): Promise<Pla
       commonName: bestMatch.details?.common_names?.[0] || bestMatch.name,
       description: bestMatch.details?.description || '',
       probability: bestMatch.probability,
-      images: [imageBase64],
+      imageUrl: `data:image/jpeg;base64,${imageBase64}`,  // 添加正确的 data URL 前缀
       taxonomy: bestMatch.details?.taxonomy || {
         kingdom: 'Plantae',
         family: '',

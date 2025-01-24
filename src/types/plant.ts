@@ -3,6 +3,7 @@ export interface PlantIdentificationResult {
   scientificName: string;
   description?: string;
   imageUrl?: string;
+  images?: string[];
   probability: number;
   taxonomy?: {
     kingdom: string;

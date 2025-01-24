@@ -93,7 +93,7 @@ const PlantResult: React.FC<PlantResultProps> = ({ result, loading, error }) => 
           <div>
             <div className="relative rounded-lg overflow-hidden shadow-lg">
               <img
-                src={result.images[0]}
+                src={result.imageUrl}
                 alt="植物图片"
                 className="w-full h-64 object-cover"
               />
@@ -116,7 +116,7 @@ const PlantResult: React.FC<PlantResultProps> = ({ result, loading, error }) => 
                 植物分类
               </h3>
               <div className="grid grid-cols-2 gap-2">
-                {Object.entries(result.taxonomy).map(([key, value]) => (
+                {result.taxonomy && Object.entries(result.taxonomy).map(([key, value]) => (
                   value && (
                     <div key={key} className="bg-white rounded p-2 text-sm">
                       <span className="text-gray-500">{key}: </span>
